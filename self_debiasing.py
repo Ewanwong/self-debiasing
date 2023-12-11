@@ -139,7 +139,7 @@ if __name__ == '__main__':
                     scores = scorer.get_scores(output_text)
                     generated_example = ModelOutput(text=output_text, scores=scores)
                     prompt.continuations.append(generated_example)
-
+                    
             maximum_expected_scores = get_maximum_expected_score_per_attribute(prompts)
             attribute_probabilities = get_attribute_probabilities(prompts)
 

@@ -110,9 +110,9 @@ class T5Wrapper(ModelWrapper):
         """
         super().__init__(use_cuda=use_cuda)
         self._tokenizer = T5Tokenizer.from_pretrained(model_name)
-        self._model = T5ForConditionalGeneration.from_pretrained(model_name)
-        if use_cuda:
-            self._model.parallelize()
+        self._model = T5ForConditionalGeneration.from_pretrained(model_name).to(self._device)
+        #if use_cuda:
+        #    self._model.parallelize()
 
     def query_model_batch(self, input_texts: List[str]):
         assert all('<extra_id_0>' in input_text for input_text in input_texts)
@@ -149,9 +149,9 @@ class GPT2Wrapper(ModelWrapper):
         """
         super().__init__(use_cuda=use_cuda)
         self._tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-        self._model = SelfDebiasingGPT2LMHeadModel.from_pretrained(model_name)  # type: SelfDebiasingGPT2LMHeadModel
-        if use_cuda:
-            self._model.parallelize()
+        self._model = SelfDebiasingGPT2LMHeadModel.from_pretrained(model_name).to(self._device)  # type: SelfDebiasingGPT2LMHeadModel
+        #if use_cuda:
+        #    self._model.parallelize()
         self._tokenizer.pad_token = self._tokenizer.eos_token
         self._model.config.pad_token_id = self._tokenizer.eos_token_id
 
